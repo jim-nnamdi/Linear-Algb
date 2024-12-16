@@ -57,6 +57,27 @@ Eigen_Vector Vector_Cross_Product(Eigen_Vector vector) {
     return cross_product_det;
 }
 
+Eigen_Vector Eigen_Value_Computation(Eigen_Vector *computational_vector) {
+    /*
+    Av = λv
+    Av - λv = 0 
+    v(A - λ) = 0
+    we cannot multiply a matrix with a number except its a matrix
+    Av = λIv  -> Av - λIv = 0
+    v(A - λI) = 0 
+
+    if the matrix (vector) is non-inversible then det(A - λI) = 0
+    A =     | 3 -1 |   
+            | 2  4 |
+   A-λI =   | 3 - λ   -1 | then solve for (3 - λ)(4 - λ) - ( -1 . 2) = 0 [12 - 3λ - 4λ + λ^2 - 2] = 0
+            | 2     4- λ |
+    (3 - λ)(4 - λ) - ( -1 . 2) = 0 [12 - 3λ - 4λ + λ^2 - 2] = 0
+    [12 - 3λ - 4λ + λ^2 - 2] = 0
+    12 -7λ + λ^2 - 2 = 0
+    λ^2 - 7λ + 10 = 0 (find the Quadratic factors)
+*/
+}
+
 int _is_vector_empty(Eigen_Vector vector) {
     if (vector->vector_rows <= 0 || vector->vector_cols <= 0) return 1;
     else return 0;
