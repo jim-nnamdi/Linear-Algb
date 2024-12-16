@@ -42,7 +42,7 @@ Matrix SubMatrices(Matrix matrix_A, Matrix matrix_B) {
 Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_B){
     if(_is_empty(matrix_A) || _is_empty(matrix_B))
         fprintf(stderr, _empty_matrix);
-    if(matrix_A->num_rows != matrix_B->num_cols)
+    if(matrix_A->num_cols != matrix_B->num_rows)
         fprintf(stderr, "m_A rows must have same dimensions as m_B cols");
     Matrix result_matrix = NewMatrix(matrix_A->num_rows, matrix_B->num_cols);
     for(int r = 0; r < matrix_A->num_rows; r++){
