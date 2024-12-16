@@ -15,7 +15,7 @@ Matrix NewMatrix(size_t num_rows, size_t num_cols) {
 
 Matrix AddMatrices(Matrix matrix_A, Matrix matrix_B) {
     if(_is_empty(matrix_A)  || _is_empty(matrix_B))
-        fprintf(stderr, "Empty matrices");
+        fprintf(stderr, _empty_matrix);
     if(matrix_A->num_rows != matrix_B->num_rows || matrix_A->num_cols != matrix_B->num_cols) 
         fprintf(stderr, "N x N matrices needed for matrix addition");
     Matrix result_matrix = NewMatrix(matrix_A->num_rows, matrix_A->num_cols);
@@ -28,7 +28,7 @@ Matrix AddMatrices(Matrix matrix_A, Matrix matrix_B) {
 
 Matrix SubMatrices(Matrix matrix_A, Matrix matrix_B) {
     if(_is_empty(matrix_A) || _is_empty(matrix_B))
-        fprintf(stderr, "One matrix is Empty");
+        fprintf(stderr, _empty_matrix);
     if(matrix_A->num_rows != matrix_B->num_rows || matrix_A->num_cols != matrix_B->num_cols)
         fprintf(stderr, "N x N matrix needed for matrix subtraction");
     Matrix result_matrix = NewMatrix(matrix_B->num_rows, matrix_B->num_cols);
@@ -41,7 +41,7 @@ Matrix SubMatrices(Matrix matrix_A, Matrix matrix_B) {
 
 Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_B){
     if(_is_empty(matrix_A) || _is_empty(matrix_B))
-        fprintf(stderr, "One matrix is empty");
+        fprintf(stderr, _empty_matrix);
     if(matrix_A->num_rows != matrix_B->num_cols)
         fprintf(stderr, "m_A rows must have same dimensions as m_B cols");
     Matrix result_matrix = NewMatrix(matrix_A->num_rows, matrix_B->num_cols);
@@ -67,6 +67,15 @@ Matrix TransposeMatrices(Matrix matrix) {
     return transpose_result;
 }
 
+Matrix ScalarMatrix(Matrix scala_matrix, int scalar) {
+    Matrix scalar_matrix = NewMatrix(scala_matrix->num_rows, scala_matrix->num_cols);
+    for(int r = 0; r < scala_matrix->num_rows; r++){
+        for(int c = 0; c < scala_matrix->num_cols; c++)
+            scalar_matrix->index[r][c] *= scalar;
+    }
+    return scalar_matrix;
+}
+
 Matrix InverseMatrices(Matrix matrix) {
      if(_is_empty(matrix))
         fprintf(stderr, "matrix is empty");
@@ -82,8 +91,8 @@ Matrix InverseMatrices(Matrix matrix) {
    // if matrix is a 2 by 2 matrix then swap [0][0] and [1][1]
    // and then add negative signs to [0][1] and [1][0]
    Matrix swapped_matrix = _swap_matrix_indices(matrix);
-   
-   float m_final_inverse = scalar_determinant * 
+   Matrix m_final_inverse = ScalarMatrix(swapped_matrix,(int)scalar_determinant);
+   return m_final_inverse;
 }
 
 float Determinant(Matrix matrix, int n) {

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
+
 typedef struct {
     double** index;
     size_t num_rows;
@@ -17,8 +18,11 @@ Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_B);
 Matrix InverseMatrices(Matrix matrix);
 Matrix TransposeMatrices(Matrix matrix);
 float Determinant(Matrix matrix, int n);
+Matrix ScalarMatrix(Matrix matrix, int scalar);
 
 Matrix _swap_matrix_indices(Matrix matrix);
 int _is_empty(Matrix matrix);
 void _free_matrix(Matrix *matrix);
 void _swap_values(double *value_one, double *value_two);
+
+const char* _empty_matrix = "cannot work with an empty matrix\n";
