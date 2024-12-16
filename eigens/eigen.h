@@ -9,13 +9,20 @@ typedef struct {
     size_t vector_cols;
 } eigen_vector_struct;
 
+typedef struct {
+    double a;
+    double b;
+    double c;
+} eigen_vector_equation;
+
 typedef eigen_vector_struct* Eigen_Vector;
+typedef eigen_vector_equation* Eigen_Vector_Equation;
 
 // public methods to access
 Eigen_Vector New_Vector(size_t vector_rows, size_t vector_cols);
 Eigen_Vector Vector_Cross_Product(Eigen_Vector vector);
 Eigen_Vector Vector_Scalar_Mult(Eigen_Vector vector);
-double Vector_Determinant(Eigen_Vector vector, int n);
+Eigen_Vector_Equation Vector_Determinant(Eigen_Vector vector, int n);
 
 // private methods abstracted
 void _swap_vector_values(Eigen_Vector on_vector);

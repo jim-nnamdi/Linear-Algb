@@ -11,7 +11,7 @@ Eigen_Vector New_Vector(size_t vector_rows, size_t vector_cols) {
     return new_vector;
 }
 
-Eigen_Vector Vector_Determinant(Eigen_Vector vector, int n) {
+Eigen_Vector_Equation Vector_Determinant(Eigen_Vector vector, int n) {
     if(_is_vector_empty(vector)) fprintf(stderr,_empty_eigen_matrix);
     Eigen_Vector vector_determinant = New_Vector(vector->vector_rows, vector->vector_rows);
     double base_determinant_value = 0.0f;
@@ -21,8 +21,11 @@ Eigen_Vector Vector_Determinant(Eigen_Vector vector, int n) {
     if (n == 2) {
         double first_row_determinant = (vector_determinant->index[0][0] * vector_determinant->index[1][1]);
         double second_row_determinant = (vector_determinant->index[0][1] * vector_determinant->index[1][0]);
+        
         Eigen_Vector new_eigen_vector_determinant = New_Vector(first_row_determinant, second_row_determinant);
-        return new_eigen_vector_determinant;
+        double equation = new_eigen_vector_determinant->index[0][0] * new_eigen_vector_determinant->index[1][1];
+        double constant = new_eigen_vector_determinant->index[0][1] * new_eigen_vector_determinant->index[1][0];
+        
     }
     Eigen_Vector _subvector_eigen_determinant = New_Vector(vector->vector_rows, vector->vector_cols);
     for(int i = 0; i < n; i++){
@@ -57,7 +60,7 @@ Eigen_Vector Vector_Cross_Product(Eigen_Vector vector) {
     return cross_product_det;
 }
 
-Eigen_Vector Eigen_Value_Computation(Eigen_Vector *computational_vector) {
+Eigen_Vector Eigen_Value_Computation(Eigen_Vector computational_vector) {
     /*
     Av = λv
     Av - λv = 0 -> v(A - λ) = 0
@@ -75,6 +78,8 @@ Eigen_Vector Eigen_Value_Computation(Eigen_Vector *computational_vector) {
     12 -7λ + λ^2 - 2 = 0
     λ^2 - 7λ + 10 = 0
 */
+    Eigen_Vector determinant = Vector_Determinant(computational_vector, computational_vector->vector_rows);
+
 }
 
 int _is_vector_empty(Eigen_Vector vector) {
