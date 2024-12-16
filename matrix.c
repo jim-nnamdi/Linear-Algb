@@ -1,8 +1,3 @@
-
-// Matrix NewMatrix(size_t num_rows, size_t num_cols);
-// Matrix AddMatrices(size_t num_rows, size_t num_cols);
-// Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_B);
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "matrix.h"
@@ -47,6 +42,16 @@ Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_B){
         }
     }
     return result_matrix;
+}
+
+void FreeMatrix(Matrix *matrix) {
+    if(!IsEmpty(*matrix)){
+        for(int i = 0; i < (*matrix)->num_rows; i++)
+            free((*matrix)->index[i]);
+        free((*matrix)->index);
+        free((*matrix));
+        *matrix = NULL;
+    }
 }
 
 int IsEmpty(Matrix matrix) {
