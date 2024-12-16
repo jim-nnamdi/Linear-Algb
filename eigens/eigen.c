@@ -50,6 +50,15 @@ Eigen_Vector Eigen_Value_Computation(Eigen_Vector computational_vector) {
     } else if (discriminant <= 0) (-determinant->b)/(2 * determinant->a);
 }
 
+Eigen_Vector Vector_Scalar_Mult(Eigen_Vector vector, int scalar) {
+    Eigen_Vector vector_scalar = New_Vector(vector->vector_rows, vector->vector_cols);
+    for(int i = 0; i < vector_scalar->vector_rows; i++){
+        for(int j = 0; j < vector_scalar->vector_cols; j++)
+            vector_scalar->index[i][j] = scalar * vector_scalar->index[i][j];
+    }
+    return vector_scalar;
+}
+
 int _is_vector_empty(Eigen_Vector vector) {
     if (vector->vector_rows <= 0 || vector->vector_cols <= 0) return 1;
     else return 0;

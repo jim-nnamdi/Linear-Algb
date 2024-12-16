@@ -20,7 +20,7 @@ typedef eigen_vector_equation* Eigen_Vector_Equation;
 
 Eigen_Vector New_Vector(size_t vector_rows, size_t vector_cols);
 Eigen_Vector Vector_Cross_Product(Eigen_Vector vector);
-Eigen_Vector Vector_Scalar_Mult(Eigen_Vector vector);
+Eigen_Vector Vector_Scalar_Mult(Eigen_Vector vector, int scalar);
 Eigen_Vector_Equation Vector_Determinant(Eigen_Vector vector, int n);
 
 void _swap_vector_values(Eigen_Vector on_vector);
