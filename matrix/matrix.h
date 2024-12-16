@@ -1,3 +1,6 @@
+#ifndef MATRIX_H
+#define MATRIX_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -26,3 +29,5 @@ void _free_matrix(Matrix *matrix);
 void _swap_values(double *value_one, double *value_two);
 
 const char* _empty_matrix = "cannot work with an empty matrix\n";
+
+#endif

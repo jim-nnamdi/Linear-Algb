@@ -17,9 +17,7 @@ Eigen_Vector_Equation Vector_Determinant(Eigen_Vector vector, int n) {
     Eigen_Vector vector_determinant = New_Vector(vector->vector_rows, vector->vector_rows);
     double base_determinant_value = 0.0f;
     
-    // solve for the base case where vector has 1 row and 1 col
     if (n == 1) return vector_determinant;
-
     double first_row_determinant = (vector_determinant->index[0][0] * vector_determinant->index[1][1]);
     double second_row_determinant = (vector_determinant->index[0][1] * vector_determinant->index[1][0]);
 
@@ -36,16 +34,6 @@ Eigen_Vector_Equation Vector_Determinant(Eigen_Vector vector, int n) {
 }
 
 Eigen_Vector Vector_Cross_Product(Eigen_Vector vector) {
-    /*
-        a = 3i + 4j + 5k
-        b = 2i + 6j + 8k
-        a x b = | i j k |
-                | 3 4 5 |
-                | 2 6 8 |
-        find the determinant of the vector matrix
-        and then generate a new vector (c) which
-        is perpendicular to the ¬ a and ¬ b
-    */
     if(_is_vector_empty(vector)) fprintf(stderr,_empty_eigen_matrix);
     Eigen_Vector vector_cproduct = New_Vector(vector->vector_rows, vector->vector_cols);
     Eigen_Vector cross_product_det = Vector_Determinant(vector_cproduct, (vector_cproduct->vector_rows * vector_cproduct->vector_cols));
@@ -53,6 +41,7 @@ Eigen_Vector Vector_Cross_Product(Eigen_Vector vector) {
 }
 
 Eigen_Vector Eigen_Value_Computation(Eigen_Vector computational_vector) {
+    if(_is_vector_empty(computational_vector)) fprint(stderr, _empty_eigen_matrix);
     Eigen_Vector_Equation determinant = Vector_Determinant(computational_vector, computational_vector->vector_rows);
     double discriminant = determinant->b * determinant->b - 4 * determinant->a * determinant->c;
     if (discriminant > 0) {
