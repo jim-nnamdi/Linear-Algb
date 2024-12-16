@@ -55,16 +55,42 @@ Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_B){
     }
     return result_matrix;
 }
-
+   
 Matrix TransposeMatrices(Matrix matrix) {
     if(IsEmpty(matrix)) 
-        fprintf(stderr, "One matrix is empty");
+        fprintf(stderr, "matrix is empty");
     Matrix transpose_result = NewMatrix(matrix->num_rows, matrix->num_cols);
     for(int r = 0; r < matrix->num_rows; r++){
         for(int c = 0; c < matrix->num_cols; c++)
             transpose_result->index[c][r] = matrix->index[r][c];
     }
     return transpose_result;
+}
+
+Matrix InverseMatrices(Matrix matrix, int n) {
+    if(IsEmpty(matrix))
+        fprintf(stderr, "matrix is empty");
+    Matrix matrix_inverse = NewMatrix(matrix->num_rows, matrix->num_cols);
+    /*
+     1
+     ---        | d -b |
+     a.d - b.c  | -c a |
+     det(A) = (a.d - b.c)
+    */
+    if(n == 1) matrix_inverse->index[0][0]; return matrix_inverse;
+    if(n == 2) (matrix_inverse->index[0][0] * matrix_inverse->index[1][1] -
+                matrix_inverse->index[0][1] * matrix_inverse->index[1][0] );
+                return matrix_inverse;
+    Matrix submatrix = NewMatrix(matrix->num_rows, matrix->num_cols);
+    for(int i = 0; i < n; i++) {
+        int subi = 0, subj = 0;
+        for(int r = 1; r < n; r++){
+            for(int c = 0; c < n; c++){
+                if(c == i) continue;
+                submatrix->index[subi][subj] = matrix->index[r][c]; subj++;
+            } subi++;
+        }
+    }
 }
 
 void FreeMatrix(Matrix *matrix) {

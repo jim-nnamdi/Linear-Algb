@@ -14,7 +14,8 @@ Matrix NewMatrix(size_t num_rows, size_t num_cols);
 Matrix AddMatrices(Matrix matrix_A, Matrix matrix_B);
 Matrix SubMatrices(Matrix matrix_A, Matrix matrix_B);
 Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_B);
-Matrix TransposeMatrices(Matrix matrix_A, Matrix matrix_B);
+Matrix InverseMatrices(Matrix matrix, int n);
+Matrix TransposeMatrices(Matrix matrix);
 
 int IsEmpty(Matrix matrix);
 void FreeMatrix(Matrix *matrix);
