@@ -13,7 +13,6 @@ Matrix NewMatrix(size_t num_rows, size_t num_cols) {
     return new_matrix;
 }
 
-
 Matrix AddMatrices(Matrix matrix_A, Matrix matrix_B) {
     if(IsEmpty(matrix_A)  || IsEmpty(matrix_B))
         fprintf(stderr, "Empty matrices");
@@ -55,6 +54,17 @@ Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_B){
         }
     }
     return result_matrix;
+}
+
+Matrix TransposeMatrices(Matrix matrix) {
+    if(IsEmpty(matrix)) 
+        fprintf(stderr, "One matrix is empty");
+    Matrix transpose_result = NewMatrix(matrix->num_rows, matrix->num_cols);
+    for(int r = 0; r < matrix->num_rows; r++){
+        for(int c = 0; c < matrix->num_cols; c++)
+            transpose_result->index[c][r] = matrix->index[r][c];
+    }
+    return transpose_result;
 }
 
 void FreeMatrix(Matrix *matrix) {
