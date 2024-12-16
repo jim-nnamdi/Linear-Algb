@@ -53,23 +53,6 @@ Eigen_Vector Vector_Cross_Product(Eigen_Vector vector) {
 }
 
 Eigen_Vector Eigen_Value_Computation(Eigen_Vector computational_vector) {
-    /*
-    Av = λv
-    Av - λv = 0 -> v(A - λ) = 0
-    Av = λIv    -> Av - λIv = 0 -> v(A - λI) = 0 
-
-    A =     | 3 -1 |   
-            | 2  4 |
-
-   A-λI =   | 3 - λ   -1 | 
-            | 2     4- λ |
-
-    (3 - λ)(4 - λ) - ( -1 . 2) = 0 
-    [12 - 3λ - 4λ + λ^2 - 2] = 0
-    [12 - 3λ - 4λ + λ^2 - 2] = 0
-    12 -7λ + λ^2 - 2 = 0
-    λ^2 - 7λ + 10 = 0
-*/
     Eigen_Vector_Equation determinant = Vector_Determinant(computational_vector, computational_vector->vector_rows);
     double discriminant = determinant->b * determinant->b - 4 * determinant->a * determinant->c;
     if (discriminant > 0) {
