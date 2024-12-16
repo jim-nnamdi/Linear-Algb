@@ -1,4 +1,5 @@
 #include "eigen.h"
+#include <math.h>
 
 Eigen_Vector New_Vector(size_t vector_rows, size_t vector_cols) {
     Eigen_Vector new_vector = (Eigen_Vector*) malloc(sizeof(eigen_vector_struct));
@@ -18,29 +19,20 @@ Eigen_Vector_Equation Vector_Determinant(Eigen_Vector vector, int n) {
     
     // solve for the base case where vector has 1 row and 1 col
     if (n == 1) return vector_determinant;
-    if (n == 2) {
-        double first_row_determinant = (vector_determinant->index[0][0] * vector_determinant->index[1][1]);
-        double second_row_determinant = (vector_determinant->index[0][1] * vector_determinant->index[1][0]);
-        
-        Eigen_Vector new_eigen_vector_determinant = New_Vector(first_row_determinant, second_row_determinant);
-        double equation = new_eigen_vector_determinant->index[0][0] * new_eigen_vector_determinant->index[1][1];
-        double constant = new_eigen_vector_determinant->index[0][1] * new_eigen_vector_determinant->index[1][0];
-        
-    }
-    Eigen_Vector _subvector_eigen_determinant = New_Vector(vector->vector_rows, vector->vector_cols);
-    for(int i = 0; i < n; i++){
-        int new_vector_row = 0, new_vector_col = 0;
-        for(int r = 1; r < n; r++){
-            for(int c = 0; c < n; c++){
-                if (c == i) continue;
-                _subvector_eigen_determinant->index[new_vector_row][new_vector_col] = vector_determinant->index[r][c];
-                new_vector_col++;
-            } new_vector_row++;
-        }
-    }
-    // the determinant of a vector has to be a new vector
-    // which is regarded perpendicular to the previous vectors;
-    return _subvector_eigen_determinant;
+
+    double first_row_determinant = (vector_determinant->index[0][0] * vector_determinant->index[1][1]);
+    double second_row_determinant = (vector_determinant->index[0][1] * vector_determinant->index[1][0]);
+
+    Eigen_Vector new_eigen_vector_determinant = New_Vector(first_row_determinant, second_row_determinant);
+    double equation = new_eigen_vector_determinant->index[0][0] * new_eigen_vector_determinant->index[1][1];
+    double constant = new_eigen_vector_determinant->index[0][1] * new_eigen_vector_determinant->index[1][0];
+    
+    double a_value = 1;
+    Eigen_Vector_Equation eigen_equation = (Eigen_Vector_Equation)malloc(sizeof(eigen_vector_equation));
+    eigen_equation->a = a_value;
+    eigen_equation->b = equation;
+    eigen_equation->c = constant;
+    return eigen_equation;
 }
 
 Eigen_Vector Vector_Cross_Product(Eigen_Vector vector) {
@@ -78,8 +70,12 @@ Eigen_Vector Eigen_Value_Computation(Eigen_Vector computational_vector) {
     12 -7λ + λ^2 - 2 = 0
     λ^2 - 7λ + 10 = 0
 */
-    Eigen_Vector determinant = Vector_Determinant(computational_vector, computational_vector->vector_rows);
-
+    Eigen_Vector_Equation determinant = Vector_Determinant(computational_vector, computational_vector->vector_rows);
+    double discriminant = determinant->b * determinant->b - 4 * determinant->a * determinant->c;
+    if (discriminant > 0) {
+        double root_one = (-determinant->b + sqrt(discriminant)) / (2 * determinant->a);
+        double root_two = (-determinant->b - sqrt(discriminant)) / (2 * determinant->a);
+    } else if (discriminant <= 0) (-determinant->b)/(2 * determinant->a);
 }
 
 int _is_vector_empty(Eigen_Vector vector) {
