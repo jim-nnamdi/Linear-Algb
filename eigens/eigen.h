@@ -19,6 +19,6 @@ double Vector_Determinant(Eigen_Vector vector, int n);
 
 // private methods abstracted
 void _swap_vector_values(Eigen_Vector on_vector);
-void _is_vector_empty(Eigen_Vector vector);
-
+int _is_vector_empty(Eigen_Vector vector);
+const char* _empty_eigen_matrix = "eigen matrix is empty";
 #endif
