@@ -1,9 +1,3 @@
-/****************************
- * Author: Samuel . Jim . N
- * Created on: 16/12/24
- * License: GPL
- ****************************/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "matrix.h"
@@ -29,6 +23,19 @@ Matrix AddMatrices(Matrix matrix_A, Matrix matrix_B) {
     for(int r = 0; r < matrix_A->num_rows; r++){
         for(int c = 0; c < matrix_A->num_cols; c++)
             result_matrix->index[r][c] = matrix_A->index[r][c] + matrix_B->index[r][c];
+    }
+    return result_matrix;
+}
+
+Matrix SubMatrices(Matrix matrix_A, Matrix matrix_B) {
+    if(IsEmpty(matrix_A) || IsEmpty(matrix_B))
+        fprintf(stderr, "One matrix is Empty");
+    if(matrix_A->num_rows != matrix_B->num_rows || matrix_A->num_cols != matrix_B->num_cols)
+        fprintf(stderr, "N x N matrix needed for matrix subtraction");
+    Matrix result_matrix = NewMatrix(matrix_B->num_rows, matrix_B->num_cols);
+    for(int r = 0; r < matrix_B->num_rows; r++) {
+        for(int c = 0; c < matrix_B->num_cols; c++)
+            result_matrix->index[r][c] = matrix_A->index[r][c] - matrix_B->index[r][c];
     }
     return result_matrix;
 }
