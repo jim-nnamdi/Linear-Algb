@@ -14,7 +14,7 @@ Matrix NewMatrix(size_t num_rows, size_t num_cols) {
 }
 
 Matrix AddMatrices(Matrix matrix_A, Matrix matrix_B) {
-    if(IsEmpty(matrix_A)  || IsEmpty(matrix_B))
+    if(_is_empty(matrix_A)  || _is_empty(matrix_B))
         fprintf(stderr, "Empty matrices");
     if(matrix_A->num_rows != matrix_B->num_rows || matrix_A->num_cols != matrix_B->num_cols) 
         fprintf(stderr, "N x N matrices needed for matrix addition");
@@ -27,7 +27,7 @@ Matrix AddMatrices(Matrix matrix_A, Matrix matrix_B) {
 }
 
 Matrix SubMatrices(Matrix matrix_A, Matrix matrix_B) {
-    if(IsEmpty(matrix_A) || IsEmpty(matrix_B))
+    if(_is_empty(matrix_A) || _is_empty(matrix_B))
         fprintf(stderr, "One matrix is Empty");
     if(matrix_A->num_rows != matrix_B->num_rows || matrix_A->num_cols != matrix_B->num_cols)
         fprintf(stderr, "N x N matrix needed for matrix subtraction");
@@ -40,7 +40,7 @@ Matrix SubMatrices(Matrix matrix_A, Matrix matrix_B) {
 }
 
 Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_B){
-    if(IsEmpty(matrix_A) || IsEmpty(matrix_B))
+    if(_is_empty(matrix_A) || _is_empty(matrix_B))
         fprintf(stderr, "One matrix is empty");
     if(matrix_A->num_rows != matrix_B->num_cols)
         fprintf(stderr, "m_A rows must have same dimensions as m_B cols");
@@ -57,7 +57,7 @@ Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_B){
 }
    
 Matrix TransposeMatrices(Matrix matrix) {
-    if(IsEmpty(matrix)) 
+    if(_is_empty(matrix)) 
         fprintf(stderr, "matrix is empty");
     Matrix transpose_result = NewMatrix(matrix->num_rows, matrix->num_cols);
     for(int r = 0; r < matrix->num_rows; r++){
@@ -67,34 +67,76 @@ Matrix TransposeMatrices(Matrix matrix) {
     return transpose_result;
 }
 
-Matrix InverseMatrices(Matrix matrix, int n) {
-    if(IsEmpty(matrix))
+Matrix InverseMatrices(Matrix matrix) {
+     if(_is_empty(matrix))
         fprintf(stderr, "matrix is empty");
-    Matrix matrix_inverse = NewMatrix(matrix->num_rows, matrix->num_cols);
     /*
      1
      ---        | d -b |
      a.d - b.c  | -c a |
      det(A) = (a.d - b.c)
     */
-    if(n == 1) matrix_inverse->index[0][0]; return matrix_inverse;
-    if(n == 2) (matrix_inverse->index[0][0] * matrix_inverse->index[1][1] -
-                matrix_inverse->index[0][1] * matrix_inverse->index[1][0] );
-                return matrix_inverse;
+   Matrix inverse_matrix = NewMatrix(matrix->num_rows, matrix->num_cols);
+   float scalar_determinant = 1/(Determinant(matrix, matrix->num_rows));
+   
+   // if matrix is a 2 by 2 matrix then swap [0][0] and [1][1]
+   // and then add negative signs to [0][1] and [1][0]
+   Matrix swapped_matrix = _swap_matrix_indices(matrix);
+   
+   float m_final_inverse = scalar_determinant * 
+}
+
+float Determinant(Matrix matrix, int n) {
+    if(_is_empty(matrix))
+        fprintf(stderr, "matrix is empty");
+    float det = 0.0f;
+    
+    //det(A) = (a.d - b.c)
+    if(n == 1) return (float) matrix->index[0][0];
+    if(n == 2) {
+        double m_determinant = matrix->index[0][0] * matrix->index[1][1] - 
+        matrix->index[0][1] * matrix->index[1][0] ; 
+        return m_determinant;
+    }
+    
+    /*
+        | 2 3 4 |
+        | 5 6 7 | 
+        | 8 9 1 |
+
+        Find the determinant (det(A)) by
+        creating submatrices by omitting the first row
+        and the first column at indices [0][0]
+
+        2 | 6 7 | recall (a.d - b.c) submatrix determinant
+          | 9 1 |        (6.1 - 7.9 = 6 - 63 = -57 . 2 = 114)
+    */
     Matrix submatrix = NewMatrix(matrix->num_rows, matrix->num_cols);
     for(int i = 0; i < n; i++) {
         int subi = 0, subj = 0;
         for(int r = 1; r < n; r++){
             for(int c = 0; c < n; c++){
                 if(c == i) continue;
+                 /* 
+                    skip the column of the chosen row to work.
+                    for submatrices generation this is the part
+                    of the matrix to be cancelled out from the data.
+                        | 2 3 4 |
+                        | 5 * * |
+                        | 8 * * |
+                */
                 submatrix->index[subi][subj] = matrix->index[r][c]; subj++;
-            } subi++;
+            } 
+            subi++;
         }
+
+        det += (i % 2 == 0 ? 1 : -1) * matrix->index[0][i] * Determinant(submatrix, n - 1);
     }
+    return det;
 }
 
-void FreeMatrix(Matrix *matrix) {
-    if(!IsEmpty(*matrix)){
+void _free_matrix(Matrix *matrix) {
+    if(!_is_empty(*matrix)){
         for(int i = 0; i < (*matrix)->num_rows; i++)
             free((*matrix)->index[i]);
         free((*matrix)->index);
@@ -103,7 +145,18 @@ void FreeMatrix(Matrix *matrix) {
     }
 }
 
-int IsEmpty(Matrix matrix) {
+Matrix _swap_matrix_indices(Matrix matrix) {
+    Matrix _new_swap_matrix = NewMatrix(2, 2);
+    size_t _new_swap_temp = _new_swap_matrix->index[0][0];
+    _new_swap_matrix->index[0][0] = _new_swap_matrix->index[1][1];
+    _new_swap_matrix->index[1][1] = _new_swap_temp;
+
+    _new_swap_matrix->index[0][1] = -_new_swap_matrix->index[0][1];
+    _new_swap_matrix->index[1][0] = -_new_swap_matrix->index[1][0];
+    return _new_swap_matrix;
+} 
+
+int _is_empty(Matrix matrix) {
     if(!matrix || matrix->num_rows <= 0 || matrix->num_rows <= 0)
         return 1;
     return 0;

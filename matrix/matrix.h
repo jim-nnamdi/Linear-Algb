@@ -14,9 +14,11 @@ Matrix NewMatrix(size_t num_rows, size_t num_cols);
 Matrix AddMatrices(Matrix matrix_A, Matrix matrix_B);
 Matrix SubMatrices(Matrix matrix_A, Matrix matrix_B);
 Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_B);
-Matrix InverseMatrices(Matrix matrix, int n);
+Matrix InverseMatrices(Matrix matrix);
 Matrix TransposeMatrices(Matrix matrix);
+float Determinant(Matrix matrix, int n);
 
-int IsEmpty(Matrix matrix);
-void FreeMatrix(Matrix *matrix);
-void SwapValues(double *value_one, double *value_two);
+Matrix _swap_matrix_indices(Matrix matrix);
+int _is_empty(Matrix matrix);
+void _free_matrix(Matrix *matrix);
+void _swap_values(double *value_one, double *value_two);
