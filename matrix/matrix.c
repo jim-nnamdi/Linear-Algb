@@ -1,3 +1,9 @@
+/****************************
+ * Author: Samuel . Jim . N
+ * Created on: 16/12/24
+ * License: GPL
+ ****************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "matrix.h"

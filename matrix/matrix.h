@@ -15,4 +15,4 @@ Matrix AddMatrices(Matrix matrix_A, Matrix matrix_B);
 Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_B);
 
 int IsEmpty(Matrix matrix);
-void FreeMatrix(Matrix matrix);
+void FreeMatrix(Matrix *matrix);
