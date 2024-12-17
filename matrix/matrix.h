@@ -22,6 +22,7 @@ Matrix InverseMatrices(Matrix matrix);
 Matrix TransposeMatrices(Matrix matrix);
 float Determinant(Matrix matrix, int n);
 Matrix ScalarMatrix(Matrix matrix, int scalar);
+void PrintMatrix(Matrix matrix);
 
 Matrix _swap_matrix_indices(Matrix matrix);
 int _is_empty(Matrix matrix);

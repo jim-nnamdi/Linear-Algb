@@ -144,6 +144,15 @@ float Determinant(Matrix matrix, int n) {
     return det;
 }
 
+void PrintMatrix(Matrix matrix) {
+    if(_is_empty(matrix)) fprintf(stderr, _empty_matrix);
+    for(int r = 0; r < matrix->num_rows; r++){
+        for(int c = 0; c < matrix->num_cols; c++) {
+            printf("%.2f\n", matrix->index[r][c]);
+        }
+    }
+}
+
 void _free_matrix(Matrix *matrix) {
     if(!_is_empty(*matrix)){
         for(int i = 0; i < (*matrix)->num_rows; i++)
